@@ -5,7 +5,7 @@ const TemplateView = React.memo(React.forwardRef(({ caricatureImage, voterType, 
   const messageMap = {
     'normal': <>Ink on my finger,<br /> pride in my heart!</>,
     'first-of-day': <>You are the First Voter!<br /> Proud Moment!</>,
-    'first-time': <>Congratulations, Your First Vote <br />A Proud Beginning!</>
+    'first-time': <>Congratulations, <br />Your First Vote <br />A Proud Beginning!</>
   };
 
   return (

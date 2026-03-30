@@ -422,9 +422,9 @@ function App() {
     return (
       <div className="app-container">
         <div className="background-shapes">
-          <div className="shape shape-1"></div>
-          <div className="shape shape-2"></div>
-          <div className="shape shape-3"></div>
+          <img src="/images/sideimg1.png" alt="shape-1" className="shape shape-1" />
+          <img src="/images/sideimg2.png" alt="shape-2" className="shape shape-2" />
+          <img src="/images/sideimg3.png" alt="shape-3" className="shape shape-3" />
         </div>
 
         <div className="voter-selection-card">
@@ -476,9 +476,9 @@ function App() {
     return (
       <div className="app-container">
         <div className="background-shapes">
-          <div className="shape shape-1"></div>
-          <div className="shape shape-2"></div>
-          <div className="shape shape-3"></div>
+          <img src="/images/sideimg1.png" alt="shape-1" className="shape shape-1" />
+          <img src="/images/sideimg2.png" alt="shape-2" className="shape shape-2" />
+          <img src="/images/sideimg3.png" alt="shape-3" className="shape shape-3" />
         </div>
 
         <div className="final-message-card">
@@ -551,9 +551,9 @@ function App() {
   return (
     <div className="app-container">
       <div className="background-shapes">
-        <div className="shape shape-1"></div>
-        <div className="shape shape-2"></div>
-        <div className="shape shape-3"></div>
+        <img src="/images/sideimg1.png" alt="shape-1" className="shape shape-1" />
+        <img src="/images/sideimg2.png" alt="shape-2" className="shape shape-2" />
+        <img src="/images/sideimg3.png" alt="shape-3" className="shape shape-3" />
       </div>
 
       <main className="main-content">
