@@ -400,18 +400,14 @@ function App() {
     const voterOptions = [
       {
         id: 'normal',
-        title: 'Normal Voter',
-        message: 'Your Voice Matters. Thank You for Voting!'
+        title: 'Normal Voter'
       },
       {
         id: 'first-of-day',
-        title: 'First Voter of the Day',
-        message: 'You are the First Voter! Proud Moment!'
-      },
+        title: 'First Voter of the Day'},
       {
         id: 'first-time',
         title: 'First Time Voter',
-        message: 'Congratulations, Your First Vote - A Proud Beginning'
       }
     ];
 

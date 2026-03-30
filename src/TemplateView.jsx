@@ -1,11 +1,11 @@
 import React from 'react';
 import './TemplateView.css';
 
-const TemplateView = React.forwardRef(({ caricatureImage, voterType, voterMessage }, ref) => {
+const TemplateView = React.memo(React.forwardRef(({ caricatureImage, voterType, voterMessage }, ref) => {
   const messageMap = {
-    'normal': 'Ink on my finger, pride in my heart.',
-    'first-of-day': 'You are the First Voter! Proud Moment!',
-    'first-time': 'Ink on my finger, pride in my heart.'
+    'normal': <>Ink on my finger,<br /> pride in my heart!</>,
+    'first-of-day': <>You are the First Voter!<br /> Proud Moment!</>,
+    'first-time': <>Congratulations, Your First Vote <br />A Proud Beginning!</>
   };
 
   return (
@@ -28,7 +28,7 @@ const TemplateView = React.forwardRef(({ caricatureImage, voterType, voterMessag
       </div>
     </div>
   );
-});
+}));
 
 TemplateView.displayName = 'TemplateView';
 
