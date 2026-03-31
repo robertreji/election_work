@@ -55,7 +55,7 @@
 .voter-message {
   position: absolute;
   bottom: 45px;
-  left: 243.141px;
+  left: 270.141px;
   text-align: center;
   z-index: 10;
   width: 400px;
@@ -68,8 +68,8 @@
 
 .voter-message p {
   margin: 0;
-  font-family:sans-serif;
-  font-size: 1.6rem;
+  font-family:Courier;
+  font-size: 1.2rem;
   font-weight: 900;
   color: #000000;
   letter-spacing: 1px;

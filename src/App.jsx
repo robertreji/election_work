@@ -19,7 +19,9 @@ function App() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [showCountdown, setShowCountdown] = useState(false);
   const [countdown, setCountdown] = useState(3);
-  
+  const [isRevealing, setIsRevealing] = useState(false);
+  const [revealCountdown, setRevealCountdown] = useState(3);
+
   // Camera State
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const videoRef = useRef(null);
@@ -150,6 +152,22 @@ function App() {
     }
     return () => clearInterval(interval);
   }, [showCountdown, countdown]);
+
+  // Reveal Countdown effect
+  useEffect(() => {
+    let interval;
+    if (isRevealing && revealCountdown > 0) {
+      interval = setInterval(() => {
+        setRevealCountdown(prev => prev - 1);
+      }, 1000);
+    } else if (revealCountdown === 0 && isRevealing) {
+      setIsRevealing(false);
+      setRevealCountdown(3);
+      setShowFinalMessage(true);
+      setStatus('done');
+    }
+    return () => clearInterval(interval);
+  }, [isRevealing, revealCountdown]);
 
   // Load images from API on mount
   useEffect(() => {
@@ -355,8 +373,9 @@ function App() {
       const resultImageBase64 = await generateCaricatureDirectly(photo, posterBase64, pushLog, imagenPrompt);
       
       setCaricature(resultImageBase64);
-      setStatus('done');
-      setShowFinalMessage(true);
+      setStatus('revealing'); // we can use 'revealing' status to display the counter
+      setIsRevealing(true);
+      setRevealCountdown(3);
       // Template will be captured and saved in useEffect below
     } catch (err) {
       console.error(err);
@@ -598,13 +617,15 @@ function App() {
                 {status === 'generating' ? (
                   <div className="loader-container">
                     <div className="spinner"></div>
-                    <p className="loading-text">
-                      Generating in Progress...
-                    </p>
+                    <p className="loading-text">Loading...</p>
+                  </div>
+                ) : status === 'revealing' ? (
+                  <div className="loader-container reveal-countdown">
+                    <h2 className="countdown-number">{revealCountdown > 0 ? revealCountdown : ''}</h2>
                   </div>
                 ) : caricature && status === 'done' ? (
                   <>
-                    <img src={caricature} alt="Caricature" className="preview-image" />
+                    <img src={caricature} alt="Caricature" className="preview-image scale-up-anim" />
                     <button className="remove-photo-btn" onClick={(e) => { e.stopPropagation(); setCaricature(null); setPhoto(null); setStatus('idle'); }}>Back to Upload</button>
                   </>
                 ) : photo ? (
@@ -635,7 +656,7 @@ function App() {
               disabled={!photo || (status !== 'idle' && status !== 'done' && status !== 'error')}
             >
               {status === 'idle' || status === 'error' ? 'DRAW MY CARICATURE ✨' : 
-               status === 'generating' ? 'CREATING CARICATURE...' : 'MAKE ANOTHER!'}
+               status === 'generating' || status === 'revealing' ? 'CREATING CARICATURE...' : 'MAKE ANOTHER!'}
             </button>
             
             {status === 'error' && (

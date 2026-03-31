@@ -443,6 +443,43 @@ header p {
   100% { transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); background: var(--accent); }
 }
 
+.reveal-countdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.countdown-number {
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--secondary);
+  text-shadow: 4px 4px 0px #000;
+  animation: popInOut 1s ease-in-out infinite;
+}
+
+@keyframes popInOut {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.scale-up-anim {
+  animation: scaleUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: center center;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .loading-text {
   font-size: 1.2rem;
   color: var(--text-main);
