@@ -60,13 +60,41 @@
   z-index: 10;
   width: 400px;
   background: rgba(255, 255, 255, 0.98);
-  padding: 16px 24px ;
+  padding: 1px 1px ;
   border-radius: 15px;
   border: 2px solid #f9f9f9;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
 }
 
+/* .voter-message {
+  position: absolute;
+  bottom: 45px;
+  left: 270.141px;
+  text-align: center;
+  z-index: 10;
+  width: 400px;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 16px 24px ;
+  border-radius: 15px;
+  border: 2px solid #f9f9f9;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+} */
+
 .voter-message p {
+  margin: 0;
+  font-family:Courier;
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #000000;
+  letter-spacing: .1px;
+  line-height: 1.2;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+  word-break: break-word;
+  max-width: 100%;
+}
+
+
+/* .voter-message p {
   margin: 0;
   font-family:Courier;
   font-size: 1.2rem;
@@ -77,7 +105,8 @@
   text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
   word-break: break-word;
   max-width: 100%;
-}
+} */
+
 
 /* Top Logo Positioning */
 .poster-top-logo {

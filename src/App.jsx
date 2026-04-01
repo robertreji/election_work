@@ -24,6 +24,8 @@ function App() {
 
   // Camera State
   const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [devices, setDevices] = useState([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState('');
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const streamRef = useRef(null);
@@ -66,13 +68,24 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then(devices => {
+      const videoDevices = devices.filter(d => d.kind === 'videoinput');
+      setDevices(videoDevices);
+      if (videoDevices.length > 0) setSelectedDeviceId(videoDevices[0].deviceId);
+    }).catch(err => console.error("Could not enumerate devices", err));
+  }, []);
+
   const startCamera = async () => {
     if (!voterType) {
       setShowVoterSelection(true);
       return;
     }
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const constraints = { 
+        video: selectedDeviceId ? { deviceId: { exact: selectedDeviceId } } : true 
+      };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       streamRef.current = stream;
       setIsCameraOpen(true);
       setPhoto(null);
@@ -601,6 +614,36 @@ function App() {
               <button className={`option-btn ${isCameraOpen ? 'active' : ''}`} onClick={isCameraOpen ? stopCamera : startCamera}>
                 {isCameraOpen ? '❌ Cancel Camera' : '📸 Use Webcam'}
               </button>
+              {devices.length > 1 && (
+                <select 
+                  className="device-select"
+                  value={selectedDeviceId} 
+                  onChange={(e) => {
+                    const newId = e.target.value;
+                    setSelectedDeviceId(newId);
+                    if (isCameraOpen) {
+                      stopCamera();
+                      setTimeout(() => {
+                        // Needs to use new constraint instead of state directly if not updated yet
+                        navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: newId } } })
+                          .then(stream => {
+                            streamRef.current = stream;
+                            setIsCameraOpen(true);
+                            if (videoRef.current) videoRef.current.srcObject = stream;
+                          })
+                          .catch(err => console.error("Camera restart failed", err));
+                      }, 200);
+                    }
+                  }}
+                  style={{ padding: '8px', borderRadius: '4px', marginLeft: '10px' }}
+                >
+                  {devices.map((device, index) => (
+                    <option key={device.deviceId} value={device.deviceId}>
+                      {device.label || `Camera ${index + 1}`}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
 
             {isCameraOpen ? (
