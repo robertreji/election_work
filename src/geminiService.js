@@ -1,6 +1,33 @@
 
-export const DEFAULT_IMAGEN_PROMPT = "Act as a graphic designer. Create a composite image by placing a vibrant, colorful pencil-sketch caricature of the person from [Image 1] onto the center of the voting poster in [Image 2].Technical Requirements: > 1. Match Framing: The caricature must use the same body-crop as the source photo (e.g., if the source is a headshot, the caricature is a headshot).2. Seamless Integration: The subject must blend into the background of the poster without any borders, frames, or outlines.3. Preserve Template: Do not alter, blur, or hallucinate the existing text, logos, or background details of the poster template.4. Style: High-contrast, sharp pencil lines, saturated colors, professional caricature exaggeration."
+export const DEFAULT_IMAGEN_PROMPT = `
+Act as a professional graphic designer.
 
+Create a composite image by placing a vibrant, colorful pencil-sketch caricature of the person from [Image 1] onto the voting poster in [Image 2].
+
+STRICT LAYOUT & POSITIONING RULES:
+1. Fixed Center: Place the caricature exactly at the center of the poster (perfect horizontal and vertical alignment).
+2. Safe Bounding Area: Keep the caricature within a central region (max 35–40% of canvas size).
+3. No Overlap: Do NOT cover or touch any existing text, logos, icons, or important graphics.
+
+CRITICAL BACKGROUND BLENDING (VERY IMPORTANT):
+4. NO background box: Do NOT place the caricature on any white/solid rectangle or patch.
+5. Transparent Edges: The caricature must have soft, feathered edges that seamlessly merge into the poster background.
+6. Background Preservation: The original poster texture/color must remain visible behind and around the caricature.
+7. Natural Fade: Slightly fade or vignette the edges of the caricature into the poster (like airbrushed blending).
+8. No Cutout Look: Avoid hard edges, sharp borders, or sticker-like appearance.
+
+TECHNICAL REQUIREMENTS:
+9. Match Framing: Use the same body crop as [Image 1].
+10. Lighting Match: Match lighting direction, color tone, and shadows with the poster.
+11. Depth Integration: Add subtle shadow or depth ONLY if it enhances realism (no harsh drop shadows).
+12. Preserve Template: Do NOT modify any existing poster elements.
+
+STYLE:
+13. High-contrast pencil sketch with vibrant colors and professional caricature exaggeration.
+
+FAIL-SAFE RULE:
+14. If blending fails or overlaps occur, automatically reduce size and re-center while maintaining seamless integration.
+`;
 export const generateCaricatureDirectly = async (base64Image, posterBase64, pushLog, customPrompt) => {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`;
