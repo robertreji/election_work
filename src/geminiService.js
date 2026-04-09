@@ -1,32 +1,100 @@
 
+
 export const DEFAULT_IMAGEN_PROMPT = `
-Act as a professional graphic designer.
+You are a professional graphic designer compositing TWO images:
 
-Create a composite image by placing a vibrant, colorful pencil-sketch caricature of the person from [Image 1] onto the voting poster in [Image 2].
+- Image 1 → SOURCE PERSON
+- Image 2 → TARGET POSTER
 
-STRICT LAYOUT & POSITIONING RULES:
-1. Fixed Center: Place the caricature exactly at the center of the poster (perfect horizontal and vertical alignment).
-2. Safe Bounding Area: Keep the caricature within a central region (max 35–40% of canvas size).
-3. No Overlap: Do NOT cover or touch any existing text, logos, icons, or important graphics.
+PRIMARY OBJECTIVE:
+Convert the person into a colored-pencil-sketched caricature and integrate them
+into the poster WITHOUT overlapping ANY existing elements.
 
-CRITICAL BACKGROUND BLENDING (VERY IMPORTANT):
-4. NO background box: Do NOT place the caricature on any white/solid rectangle or patch.
-5. Transparent Edges: The caricature must have soft, feathered edges that seamlessly merge into the poster background.
-6. Background Preservation: The original poster texture/color must remain visible behind and around the caricature.
-7. Natural Fade: Slightly fade or vignette the edges of the caricature into the poster (like airbrushed blending).
-8. No Cutout Look: Avoid hard edges, sharp borders, or sticker-like appearance.
+--------------------------------------------------
+STEP 1: PERSON TRANSFORMATION
+--------------------------------------------------
 
-TECHNICAL REQUIREMENTS:
-9. Match Framing: Use the same body crop as [Image 1].
-10. Lighting Match: Match lighting direction, color tone, and shadows with the poster.
-11. Depth Integration: Add subtle shadow or depth ONLY if it enhances realism (no harsh drop shadows).
-12. Preserve Template: Do NOT modify any existing poster elements.
+- Extract FULL PERSON (head → hands fully visible)
+- Preserve EXACT pose, gesture, and proportions
+- Style: 70% realistic + 30% caricature
+- Transparent background ONLY
 
-STYLE:
-13. High-contrast pencil sketch with vibrant colors and professional caricature exaggeration.
+--------------------------------------------------
+STEP 2: SAFE LAYOUT ANALYSIS (CRITICAL)
+--------------------------------------------------
 
-FAIL-SAFE RULE:
-14. If blending fails or overlaps occur, automatically reduce size and re-center while maintaining seamless integration.
+Before placing the subject, ANALYZE Image 2 and DEFINE:
+
+1. HARD EXCLUSION ZONES (DO NOT TOUCH):
+   - Top header (logos row)
+   - All Malayalam headings (top-left & top-right)
+   - Right-side text block
+   - Bottom-right illustration (bird + laptop)
+
+2. SAFE ZONE (ONLY AREA ALLOWED):
+   - Central empty visual region between:
+     * Below header
+     * Left of right-side text
+     * Above bottom illustration
+   - Treat this as a BOUNDING BOX
+
+--------------------------------------------------
+STEP 3: FITTING LOGIC (MOST IMPORTANT)
+--------------------------------------------------
+
+You MUST ensure the subject fits INSIDE the SAFE ZONE bounding box.
+
+STRICT RULES:
+
+1. BOUNDING BOX FIT:
+   - Compute full subject silhouette INCLUDING:
+     * Fingers
+     * Elbows
+     * Hair volume
+   - Fit ENTIRE silhouette inside safe zone
+
+2. AUTO SCALING:
+   - Start at ~30% canvas width
+   - IF any part crosses safe zone:
+     → SCALE DOWN progressively until FULLY inside
+
+3. CENTERING:
+   - Horizontally center within SAFE ZONE
+   - Vertically place at ~55% of SAFE ZONE height (not full canvas)
+
+4. COLLISION DETECTION (MANDATORY):
+   - Check intersections with:
+     * Text blocks
+     * Logos
+     * Graphics
+   - IF collision detected:
+     → Reduce scale AND slightly shift within safe zone
+     → NEVER allow overlap
+
+--------------------------------------------------
+STEP 4: EDGE BLENDING
+--------------------------------------------------
+
+- Soft feathered edges
+- Slight fade at bottom
+- NO white borders / glow / shadow blocks
+- Poster texture must remain visible
+
+--------------------------------------------------
+FINAL NON-NEGOTIABLE RULES
+--------------------------------------------------
+
+- ZERO overlap with ANY poster element
+- FULL subject must be visible (no cropping)
+- NO background behind subject
+- Maintain poster integrity completely
+
+FAIL CONDITION:
+If subject overlaps ANY element → RESULT IS INVALID
+
+SUCCESS CONDITION:
+Subject appears naturally embedded, centered, and perfectly contained
+within the safe zone with clean spacing on all sides.
 `;
 export const generateCaricatureDirectly = async (base64Image, posterBase64, pushLog, customPrompt) => {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;

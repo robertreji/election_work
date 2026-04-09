@@ -2,17 +2,17 @@ import React from 'react';
 import './TemplateView.css';
 
 const TemplateView = React.memo(React.forwardRef(({ caricatureImage, voterType, voterMessage }, ref) => {
-  const messageMap = {
-    'normal': <>ഞാൻ ഉറപ്പായും <br/>വോട്ട് ചെയ്യും</>,
-    'first-of-day': <>ഞാൻ ഉറപ്പായും <br/>വോട്ട് ചെയ്യും</>,
-    'first-time':<>ഞാൻ ഉറപ്പായും <br/>വോട്ട് ചെയ്യും</>,
-  };
-
-  //   const messageMap = {
-  //   'normal': <>Ink on my finger,<br /> pride in my heart!</>,
-  //   'first-of-day': <>You are the First Voter!<br /> Proud Moment!</>,
-  //   'first-time': <>Congratulations, <br />Your First Vote <br />A Proud Beginning!</>
+  // const messageMap = {
+  //   'normal': <>ഞാൻ ഉറപ്പായും <br/>വോട്ട് ചെയ്യും</>,
+  //   'first-of-day': <>ഞാൻ ഉറപ്പായും <br/>വോട്ട് ചെയ്യും</>,
+  //   'first-time':<>ഞാൻ ഉറപ്പായും <br/>വോട്ട് ചെയ്യും</>,
   // };
+
+    const messageMap = {
+    'normal': <>Ink on my finger,<br /> pride in my heart!</>,
+    'first-of-day': <>You are the First Voter!<br /> Proud Moment!</>,
+    'first-time': <>Congratulations, <br />Your First Vote <br />A Proud Beginning!</>
+  };
 
   return (
     <div ref={ref} className="template-container">
